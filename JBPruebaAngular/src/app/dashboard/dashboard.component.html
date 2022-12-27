@@ -1,0 +1,33 @@
+<div class="container">
+  <h1>Gif Gallery</h1>
+  <form [formGroup]="gifForm" (ngSubmit)="onSubmit()"
+  class="formulario-agregar">
+   <div class="row">
+    <div class="col-6">
+      <input type="text" placeholder="Gif URL" class="form-control" formControlName="url">
+    </div>
+    <div class="col-3">
+      <button type="submit" class="btn btn-outline-secondary">Agregar</button>
+    </div>
+   </div>
+  </form>
+
+  <p *ngIf="Gifs.length <= 0" class="no-data">
+    No existen datos todavia 
+  </p>
+
+
+  <div *ngIf="Gifs.length > 0" class="row">
+    <div *ngFor="let Gif of Gifs; let i = index" class="col-sm-4">
+      <div class="card">
+        <div class="card-img">
+          <img src={{Gif.url}} class="card-img-top" alt="...">
+        </div>
+      
+        <div class="card-body">
+          <a href="#" class="btn btn-primary">Eliminar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
