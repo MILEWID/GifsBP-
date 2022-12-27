@@ -4,3 +4,7 @@ export interface Gif {
     author_id: number;
   }
   
+  export interface DataGif extends Gif {
+    id: number;
+    }
+    

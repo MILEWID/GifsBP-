@@ -1,6 +1,7 @@
 import { Component, OnInit ,NgZone} from '@angular/core';
 import { ApiService } from '../services/ApiService';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Gif, DataGif } from '../../models/model';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -10,20 +11,25 @@ export class DashboardComponent implements OnInit {
   Gifs: any = [];
   submitted = false;
   gifForm: FormGroup;
-  EmployeeProfile: any = ['Finance', 'BDM', 'HR', 'Sales', 'Admin'];
+
   constructor(
     private ApiService: ApiService,
     private ngZone: NgZone,
-    public fb: FormBuilder) { 
-      this.gifForm = this.fb.group({
-        url: [''],
-      });
+    public fb: FormBuilder
+    ) { 
+      this.mainForm();
+      this.gifForm = fb.group({});
     }
 
   ngOnInit(): void {
     this.readGifs();
+    this.mainForm();
+  }
+
+  mainForm() {
     this.gifForm = this.fb.group({
-      url: [''],
+      url: "",
+      author_id: 2001,
     });
   }
 
@@ -41,10 +47,18 @@ export class DashboardComponent implements OnInit {
           alert('Gif agregado correctamente ')
         },
         error: (e) => {
+          alert('no se ha podido agregar')
           console.log(e);
         },
       });
 
   }
 
-}
+  eliminar(id: number) {
+    if (window.confirm('Esta seguro que desea eliminar?')) {
+        const prueba:DataGif= this.ApiService.getGifData.find((item) => item.id === id)!;
+        this.ApiService.deleteGif(prueba);
+      }
+    }
+  }
+
